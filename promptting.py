@@ -21,6 +21,7 @@ def tags_to_list_to_end(source):
     tag_list = []
     color_list = load_colors(r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt')
     redundant_list = ['breasts']
+    kill_list = []
 
     for line in lines:
         # Filtering out empty lines and lines with only a question mark
@@ -48,6 +49,9 @@ def tags_to_list_to_end(source):
                 out_tags.append(tag)  # Add into out_tags for record
                 continue
         # Redundant tag removal
+        if any(kill_word in tag for kill_word in kill_list):
+            out_tags.append(tag)  # Add into out_tags for record
+            continue  # Skip this tag as it is redundant
         if tag in redundant_list:
             out_tags.append(tag)  # Add into out_tags for record
             continue  # Skip this tag as it is redundant
@@ -74,7 +78,7 @@ if __name__ == '__main__':
     #absolut path D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt
     color_list_path = r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt'
     color_list = load_colors(color_list_path)
-
+    print(color_list)
 
     # Formatting the data and printing the result
 
