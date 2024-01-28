@@ -1,13 +1,14 @@
 
-def load_colors(filename):
+def load_matching_list(filename):
     """
-    Load color data from a text file into a list.
+    Load base data from a text file into a list.
     """
     with open(filename, 'r') as file:
-        colors = [line.strip().lower() for line in file.readlines() if line.strip()]
+        lists = [line.strip().lower() for line in file.readlines() if line.strip()]
+
         #剔除空行
 
-    return colors
+    return lists
 
 
 def list_maching(list1, list2):
@@ -19,7 +20,8 @@ def tags_to_list_to_end(source):
 
     lines = source.strip().split('\n')
     tag_list = []
-    color_list = load_colors(r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt')
+    color_list = load_matching_list(r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt')
+    hair_style_list = load_matching_list(r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\hair_style.txt')
     redundant_list = ['breasts']
     kill_list = []
 
@@ -37,14 +39,13 @@ def tags_to_list_to_end(source):
 
     for tag in tag_list:
         # Hair color and style recognition
-        if 'hair' in tag:
-            words = tag.split(' ')
+        words = tag.split(' ')
+        if 'hair' in words: # If the tag contains the word 'hair' instead of have 'hair' as part of a word
             if any(word in color_list for word in words):
                 out_tags.append(tag) # Add into out_tags for record
                 continue  # Skip this tag as it contains a color word
         # Eye color recognition
         if 'eyes' in tag:
-            words = tag.split(' ')
             if any(word in color_list for word in words):
                 out_tags.append(tag)  # Add into out_tags for record
                 continue
@@ -53,6 +54,9 @@ def tags_to_list_to_end(source):
             out_tags.append(tag)  # Add into out_tags for record
             continue  # Skip this tag as it is redundant
         if tag in redundant_list:
+            out_tags.append(tag)  # Add into out_tags for record
+            continue  # Skip this tag as it is redundant
+        if tag in hair_style_list:
             out_tags.append(tag)  # Add into out_tags for record
             continue  # Skip this tag as it is redundant
 
@@ -64,7 +68,7 @@ def tags_to_list_to_end(source):
 
 #todo: 增加修改逻辑
 '''
-1.关于头发，发型的识别
+1.关于头发，发型的识别 完成
 2.关于冗余词汇的识别
 2.0 纯净模式，连1girl与其他基本外貌特征一律不要，方便衔接在人设后
 2.1 breast - 替换为medium breasts，如果有则直接删除（设立一个flag来确定之前有没有添加。顺序也可以用flag的方法来判别：1girl，breasts，hair，eyes。。。）
@@ -77,97 +81,130 @@ def tags_to_list_to_end(source):
 if __name__ == '__main__':
     #absolut path D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt
     color_list_path = r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt'
-    color_list = load_colors(color_list_path)
+    color_list = load_matching_list(color_list_path)
     print(color_list)
 
     # Formatting the data and printing the result
 
     # Source data
     source_data = """
-    ?
-    medium breasts 1.7k
-    ?
-    6+others 1.7k
-    ?
-    animal focus 13k
-    ?
-    architecture 11k
-    ?
-    armor 171k
-    ?
-    cape 177k
-    ?
-    castle 6.4k
-    ?
-    cloud 241k
-    ?
-    cloudy sky 60k
-    ?
-    blue hair 60k
-    ?
-    blue eyes 60k
-    ?
-    dragon 18k
-    ?
-    dragon horns 31k
-    ?
-    dragon tail 21k
-    ?
-    fantasy 14k
-    ?
-    faulds 7.0k
-    ?
-    full armor 6.0k
-    ?
-    gauntlets 43k
-    ?
-    giant 10k
-    ?
-    giant monster 619
-    ?
-    gold armor 1.8k
-    ?
-    helm 2.3k
-    ?
-    helmet 59k
-    ?
-    holding 1.0M
-    ?
-    holding sword 79k
-    ?
-    holding weapon 196k
-    ?
-    horns 366k
-    ?
-    knight 6.1k
-    ?
-    multiple others 11k
-    ?
-    outdoors 434k
-    ?
-    pauldrons 25k
-    ?
-    plate armor 1.7k
-    ?
-    shoulder armor 48k
-    ?
-    sky 353k
-    ?
-    soldier 3.4k
-    ?
-    spire 364
-    ?
-    standing 723k
-    ?
-    sword 233k
-    ?
-    tail 624k
-    ?
-    tower 5.2k
-    ?
-    weapon 501k
-    ?
-    wings 361k
+    
+?
+1girl 5.1M
+
+?
+animal ears 938k
+
+?
+blue gloves 18k
+
+?
+blue hairband 13k
+
+?
+blush 2.5M
+
+?
+braid 520k
+
+?
+brown hair 1.3M
+
+?
+clenched hand 46k
+
+?
+closed mouth 861k
+
+?
+collarbone 649k
+
+?
+ear ribbon 3.8k
+
+?
+fingerless gloves 213k
+
+?
+gloves 1.1M
+
+?
+green ribbon 18k
+
+?
+hair ornament 1.2M
+
+?
+hairband 394k
+
+?
+hairclip 278k
+
+?
+horse ears 83k
+
+?
+horse girl 74k
+
+?
+horse tail 47k
+
+?
+looking at viewer 2.7M
+
+?
+midriff 256k
+
+?
+multicolored hair 492k
+
+?
+navel 965k
+
+?
+official alternate costume 221k
+
+?
+ribbon 929k
+
+?
+short hair 1.9M
+
+?
+short sleeves 494k
+
+?
+simple background 1.4M
+
+?
+skirt 1.3M
+
+?
+smile 2.3M
+
+?
+solo 4.2M
+
+?
+star (symbol) 191k
+
+?
+star hair ornament 24k
+
+?
+streaked hair 170k
+
+?
+tail 626k
+
+?
+white background 1.1M
+
+?
+white hair 556k
+
+?
+yellow eyes 558k
     """
 
     # Formatting the data
