@@ -82,6 +82,9 @@ if __name__ == '__main__':
     #absolut path D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt
     color_list_path = r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\colors.txt'
     color_list = load_matching_list(color_list_path)
+    hair_style_list_path = r'D:\0---Program\Projects\Tools\Nai3\NAi-Prompting-Tools\tagbase\hair_style.txt'
+    hair_style_list = load_matching_list(hair_style_list_path)
+    print(hair_style_list)
     print(color_list)
 
     # Formatting the data and printing the result
